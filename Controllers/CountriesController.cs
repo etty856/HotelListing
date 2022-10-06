@@ -21,6 +21,7 @@ namespace HotelListing.Controllers
         }
 
         // GET: api/Countries
+        //Getting all country from the database
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
         {
@@ -29,6 +30,7 @@ namespace HotelListing.Controllers
         }
 
         // GET: api/Countries/{id}
+        //Getting a specified country by its Id from the database
         [HttpGet("{id}")]
         public async Task<ActionResult<Country>> GetCountry(int id)
         {
@@ -42,18 +44,19 @@ namespace HotelListing.Controllers
             return Ok(country);
         }
 
-        // PUT: api/Countries/5
+        // PUT: api/Countries/{id}
+        //Updating a country in the database
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCountry(int id, Country country)
         {
             if (id != country.Id)
             {
-                return BadRequest();
+                return BadRequest("Invalid record Id");
             }
 
             _context.Entry(country).State = EntityState.Modified;
-
+             
             try
             {
                 await _context.SaveChangesAsync();
@@ -69,11 +72,12 @@ namespace HotelListing.Controllers
                     throw;
                 }
             }
-
+            //this is a good response, I updated the record,  but I dont have anything to return back
             return NoContent();
         }
 
         // POST: api/Countries
+        //Adding a country to the database
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Country>> PostCountry(Country country)
@@ -84,7 +88,8 @@ namespace HotelListing.Controllers
             return CreatedAtAction("GetCountry", new { id = country.Id }, country);
         }
 
-        // DELETE: api/Countries/5
+        // DELETE: api/Countries/{id}
+        //Deleting a specified country from the database by its Id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCountry(int id)
         {
@@ -100,6 +105,7 @@ namespace HotelListing.Controllers
             return NoContent();
         }
 
+        //A helping method for knowing if a country with the given Id existss 
         private bool CountryExists(int id)
         {
             return _context.Countries.Any(e => e.Id == id);
