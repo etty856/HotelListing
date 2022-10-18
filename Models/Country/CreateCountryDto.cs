@@ -2,10 +2,7 @@
 
 namespace HotelListing.Models.Country
 {
-    public class CreateCountryDto
+    public class CreateCountryDto : BaseCountryDto
     {
-        [Required]
-        public string Name { get; set; }
-        public string ShortName { get; set; }
     }
 }
