@@ -2,6 +2,7 @@
 using HotelListing.Data;
 using HotelListing.Models.Country;
 using HotelListing.Models.Hotel;
+using HotelListing.Models.User;
 
 namespace HotelListing.Configurations
 {
@@ -18,6 +19,9 @@ namespace HotelListing.Configurations
             //Hotel
             CreateMap<Hotel, HotelDto>().ReverseMap();
             CreateMap<Hotel, CreateHotelDto>().ReverseMap();
+
+            //User
+            CreateMap<ApiUser, ApiUserDto>().ReverseMap();
         }
     }
 }

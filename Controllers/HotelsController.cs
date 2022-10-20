@@ -81,7 +81,6 @@ namespace HotelListing.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
