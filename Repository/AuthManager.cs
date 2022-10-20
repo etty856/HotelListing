@@ -10,6 +10,7 @@ namespace HotelListing.Repository
     {
         private readonly IMapper _mapper;
         private readonly UserManager<ApiUser> _userManager;
+        private ApiUser _user;
 
         public AuthManager(IMapper mapper, UserManager<ApiUser> userManager)
         {
@@ -17,10 +18,17 @@ namespace HotelListing.Repository
             _userManager = userManager;
         }
 
-        public Task<bool> Login(LoginDto loginDto)
+        public async Task<bool> Login(LoginDto loginDto)
         {
-            var user=_userManager.FindByEmailAsync(loginDto.Email);
-            var validPassword = _userManager.ValidatePasswordAsync(loginDto.Password);
+
+            _user = await _userManager.FindByEmailAsync(loginDto.Email);
+            bool isValidUser = await _userManager.CheckPasswordAsync(_user, loginDto.Password);
+
+            if (_user == null || isValidUser == false)
+            {
+                return null;
+            }
+            
         }
 
         public async Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto)
